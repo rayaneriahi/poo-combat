@@ -2,8 +2,7 @@
 
 require_once "classes/HeroesManager.php";
 require_once "classes/Hero.php";
-
-$db = new PDO('mysql:host=localhost;dbname=poo_combat', 'root', '');
+require_once __DIR__ . '/config/db.php';
 
 if (isset($_POST['name']))
 {

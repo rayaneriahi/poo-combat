@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../config/db.php';
+
 class Hero 
 {
     private int $id;
@@ -17,7 +19,8 @@ class Hero
         $this->special_attack_type = $special_attack_type;
         $this->special_attack = 0;
         $this->class = $class;
-        $this->db = new PDO('mysql:host=localhost;dbname=poo_combat', 'root', '');
+        global $db;
+        $this->db = $db;
     }
 
     public function getId()

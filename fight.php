@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/config/db.php';
+
 if (isset($_POST['id']))
 {
 
@@ -8,7 +10,7 @@ require_once 'classes/Hero.php';
 require_once 'classes/Monster.php';
 require_once 'classes/FightManager.php';
 
-$heroesManager = new HeroesManager(new PDO('mysql:host=localhost;dbname=poo_combat', 'root', ''));
+$heroesManager = new HeroesManager($db);
 
 $hero = $heroesManager->find($_POST['id']);
 

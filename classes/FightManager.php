@@ -5,10 +5,18 @@ session_start();
 require_once 'HeroesManager.php';
 require_once 'Hero.php';
 require_once 'Monster.php';
+require_once __DIR__ . '/../config/db.php';
 
 class FightManager
 {
     private array $monstersType = ['Ogre', 'Wizard', 'Infantryman'];
+    private PDO $db;
+
+    public function __construct()
+    {
+        global $db;
+        $this->db = $db;
+    }
 
     public function createMonster()
     {
@@ -30,7 +38,7 @@ class FightManager
             $textDamage = $monster->getType() . " a infligé " . $monsterDammage->dammage . " points  de dégats";
         }
 
-        $heroesManager = new HeroesManager(new PDO('mysql:host=localhost;dbname=poo_combat', 'root', ''));
+        $heroesManager = new HeroesManager($this->db);
         $heroesManager->update( $hero->getId(), $hero->getHealthPoint(), $hero->getSpecialAttack());
 
         if ($hero->getHealthPoint() <= 0)
@@ -59,7 +67,7 @@ class FightManager
             $textDamage = $hero->getName() . " a infligé " . $heroDammage->dammage . " points  de dégats";
         }
 
-        $heroesManager = new HeroesManager(new PDO('mysql:host=localhost;dbname=poo_combat', 'root', ''));
+        $heroesManager = new HeroesManager($this->db);
         $heroesManager->update( $hero->getId(), $hero->getHealthPoint(), $hero->getSpecialAttack());
 
         if ($monster->getHealthPoint() <= 0)
@@ -102,7 +110,7 @@ $data = json_decode($json, true);
 
 if (isset($data['action']))
 {
-    $heroesManager = new HeroesManager(new PDO('mysql:host=localhost;dbname=poo_combat', 'root', ''));
+    $heroesManager = new HeroesManager($db);
 
     $hero = $heroesManager->find($data['heroId']);
 
